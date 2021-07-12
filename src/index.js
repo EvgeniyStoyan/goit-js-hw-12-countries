@@ -5,7 +5,7 @@ import countriesTemplate from './template/countries.hbs';
 const debounce = require('lodash.debounce');
 
 import '@pnotify/core/dist/BrightTheme.css';
-import { error } from '@pnotify/core';
+import { error, alert } from '@pnotify/core';
 import '@pnotify/core/dist/PNotify.css';
 
 const refs = {
@@ -41,13 +41,20 @@ function getCountries(country) {
     createMarkupCountry(country);
   } else if (country.length >= 2 && country.length <= 10) {
     createMarkupCountries(country);
+    refineRequestMessage();
   } else {
     errorMessage();
   }
 }
 
+function refineRequestMessage() {
+  alert({
+    text: 'Too many matches found. Please enter a more specific query.',
+  });
+}
+
 function errorMessage() {
   error({
-    text: 'Too many matches found. Please enter a more specific query.',
+    text: 'Sorry, this country does not exist ',
   });
 }
